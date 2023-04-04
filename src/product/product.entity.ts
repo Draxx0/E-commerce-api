@@ -1,5 +1,6 @@
+import { Category } from 'src/category/category.entity';
 import { TimestampEntity } from 'src/generic/timestamp.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('product')
 export class Product extends TimestampEntity {
@@ -14,4 +15,10 @@ export class Product extends TimestampEntity {
 
   @Column({ type: 'varchar' })
   image: string;
+
+  @ManyToOne(() => Category)
+  category: Category;
+
+  @Column()
+  categoryId: string;
 }

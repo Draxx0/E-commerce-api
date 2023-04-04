@@ -11,23 +11,23 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './DTO/create-category.dto';
 import { UpdateCategoryDto } from './DTO/update-category.dto';
 
-@Controller('category')
+@Controller('categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  createCategory(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoryService.createCategory(createCategoryDto);
   }
 
   @Get()
   findAll() {
-    return this.categoryService.findAll();
+    return this.categoryService.getAllCategory();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+  getOneCategory(@Param('id') id: string) {
+    return this.categoryService.getOneCategory(id);
   }
 
   @Patch(':id')
@@ -40,6 +40,6 @@ export class CategoryController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.categoryService.remove(+id);
+    return this.categoryService.deleteCategory(id);
   }
 }
