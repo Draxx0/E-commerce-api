@@ -21,20 +21,9 @@ export class ProductService {
 
   async createProduct(data: CreateProductDto) {
     try {
-      const category = await this.categoryRepository.findOneBy({
-        id: data.categoryId,
-      });
-
-      if (!category) {
-        throw new Error('Category not found');
-      }
-
-      const product = this.productRepository.create({
-        ...data,
-        category,
-      });
-
-      return this.productRepository.save(product);
+      const product = this.productRepository.create(data);
+      await this.productRepository.save(product);
+      return product;
     } catch (error) {
       console.log(error);
       throw new Error('Error while creating article');

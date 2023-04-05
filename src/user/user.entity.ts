@@ -1,5 +1,6 @@
 import { TimestampEntity } from 'src/generic/timestamp.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/order/order.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user')
 export class User extends TimestampEntity {
@@ -17,4 +18,7 @@ export class User extends TimestampEntity {
 
   @Column({ type: 'varchar' })
   password: string;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 }

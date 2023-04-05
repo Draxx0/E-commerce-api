@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
-// import { ProductCreateDTO } from '../dto/create-product.dto';
-// import { ProductUpdateDTO } from '../dto/update-product.dto';
+import { CreateOrderDto } from './DTO/create-order.dto';
+import { UpdateOrderDto } from './DTO/update-order.dto';
 
 Injectable();
 export class OrderService {
@@ -12,11 +12,14 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
   ) {}
 
-  async getAllProducts() {
-    return await this.orderRepository.find();
+  async getAllOrder() {
+    return await this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.orderItems', 'orderItems')
+      .getMany();
   }
 
-  async createProduct(data: any) {
+  async createOrder(data: CreateOrderDto): Promise<Order> {
     try {
       return this.orderRepository.save(data);
     } catch (error) {
@@ -24,19 +27,20 @@ export class OrderService {
       throw new Error('Error while creating article');
     }
   }
-  async getOneProductById(id: string) {
+  async getOneOrderById(id: string) {
     return await this.orderRepository.findOneBy({ id });
   }
 
-  async updateProduct(id: string, data: any) {
-    const product = await this.orderRepository.findOneBy({ id });
-    const productUpdate = { ...product, ...data };
+  // async updateOrder(id: string, data: UpdateOrderDto) {
+  //   const product = await this.orderRepository.findOneBy({ id });
+  //   const productUpdate = { ...product, ...data };
 
-    await this.orderRepository.save(productUpdate);
+  //   await this.orderRepository.save(productUpdate);
 
-    return productUpdate;
-  }
-  async deleteProduct(id: string) {
+  //   return productUpdate;
+  // }
+
+  async deleteOrder(id: string) {
     return await this.orderRepository.delete(id);
   }
 }

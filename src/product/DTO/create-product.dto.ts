@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+import { IsInt, IsString } from 'class-validator';
+import { Category } from 'src/category/category.entity';
 
 export class CreateProductDto {
   @IsString()
@@ -10,6 +11,9 @@ export class CreateProductDto {
   @IsString()
   image: string;
 
+  @IsInt()
+  price: number;
+
   @IsString()
-  categoryId: string;
+  category: Category;
 }

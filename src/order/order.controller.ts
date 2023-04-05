@@ -8,10 +8,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-// import { ProductCreateDTO } from '../dto/create-product.dto';
-// import { ProductUpdateDTO } from '../dto/update-product.dto';
 import { Order } from './order.entity';
 import { DeleteResult } from 'typeorm';
+import { CreateOrderDto } from './DTO/create-order.dto';
+import { UpdateOrderDto } from './DTO/update-order.dto';
 
 @Controller('orders')
 export class OrderController {
@@ -19,26 +19,29 @@ export class OrderController {
 
   @Get()
   getAllProducts(): Promise<Order[]> {
-    return this.orderService.getAllProducts();
+    return this.orderService.getAllOrder();
   }
 
   @Get(':id')
   getOneProductById(@Param('id') id: string): Promise<Order> {
-    return this.orderService.getOneProductById(id);
+    return this.orderService.getOneOrderById(id);
   }
 
   @Post()
-  createProduct(@Body() data: any): Promise<Order> {
-    return this.orderService.createProduct(data);
+  createProduct(@Body() data: CreateOrderDto): Promise<Order> {
+    return this.orderService.createOrder(data);
   }
 
-  @Put(':id')
-  updateProduct(@Param('id') id: string, @Body() data: any): Promise<Order> {
-    return this.orderService.updateProduct(id, data);
-  }
+  // @Put(':id')
+  // updateProduct(
+  //   @Param('id') id: string,
+  //   @Body() data: UpdateOrderDto,
+  // ): Promise<Order> {
+  //   return this.orderService.updateOrder(id, data);
+  // }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): Promise<DeleteResult> {
-    return this.orderService.deleteProduct(id);
+  deleteOrder(@Param('id') id: string): Promise<DeleteResult> {
+    return this.orderService.deleteOrder(id);
   }
 }

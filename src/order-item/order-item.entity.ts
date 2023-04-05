@@ -1,5 +1,7 @@
 import { TimestampEntity } from 'src/generic/timestamp.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/order/order.entity';
+import { Product } from 'src/product/product.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('order-item')
 export class OrderItem extends TimestampEntity {
@@ -7,11 +9,11 @@ export class OrderItem extends TimestampEntity {
   id: string;
 
   @Column({ type: 'integer' })
-  quantity: string;
+  quantity: number;
 
-  @Column({ type: 'varchar' })
-  orderId: string;
+  @ManyToOne(() => Order)
+  order: Order;
 
-  @Column({ type: 'varchar' })
-  productId: string;
+  @ManyToOne(() => Product)
+  product: Product;
 }

@@ -16,9 +16,9 @@ export class Product extends TimestampEntity {
   @Column({ type: 'varchar' })
   image: string;
 
+  @Column({ type: 'integer' })
+  price: number;
+
   @ManyToOne(() => Category)
   category: Category;
-
-  @Column()
-  categoryId: string;
 }

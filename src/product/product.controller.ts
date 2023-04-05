@@ -8,10 +8,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-// import { ProductCreateDTO } from '../dto/create-product.dto';
-// import { ProductUpdateDTO } from '../dto/update-product.dto';
 import { Product } from './product.entity';
 import { DeleteResult } from 'typeorm';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductController {
@@ -28,12 +28,15 @@ export class ProductController {
   }
 
   @Post()
-  createProduct(@Body() data: any): Promise<Product> {
+  createProduct(@Body() data: CreateProductDto): Promise<Product> {
     return this.productService.createProduct(data);
   }
 
   @Put(':id')
-  updateProduct(@Param('id') id: string, @Body() data: any): Promise<Product> {
+  updateProduct(
+    @Param('id') id: string,
+    @Body() data: UpdateProductDto,
+  ): Promise<Product> {
     return this.productService.updateProduct(id, data);
   }
 
