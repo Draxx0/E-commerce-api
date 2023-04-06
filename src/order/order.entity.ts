@@ -15,7 +15,7 @@ export class Order extends TimestampEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'enum', enum: statusEnum, default: statusEnum.PROGRESS })
+  @Column({ type: 'enum', enum: statusEnum, default: statusEnum.INCARD })
   status: statusEnum;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })

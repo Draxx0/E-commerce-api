@@ -13,6 +13,7 @@ import { OrderItem } from './order-item.entity';
 import { CreateOrderItemDto } from './DTO/create-order-item.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UpdateOrderItemDto } from './DTO/update-order-item.dto';
+import { IDeleteBodyInterface } from './type/deleteBodyInterface';
 
 @Controller('order-items')
 export class OrderItemController {
@@ -34,11 +35,8 @@ export class OrderItemController {
   }
 
   @Delete(':id')
-  deleteOrderItem(
-    @Param('id') id: string,
-    orderId: string,
-  ): Promise<DeleteResult> {
-    return this.orderItemService.deleteOrderItem(id, orderId);
+  deleteOrderItem(@Param('id') id: string): Promise<DeleteResult> {
+    return this.orderItemService.deleteOrderItem(id);
   }
 
   @Put(':id')

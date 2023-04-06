@@ -56,13 +56,17 @@ export class OrderItemService {
     return await this.orderItemRepository.save(data);
   }
 
-  async deleteOrderItem(id: string, orderId: string) {
+  async deleteOrderItem(id: string) {
     const orderItem = await this.orderItemRepository
       .createQueryBuilder('orderItem')
       .leftJoinAndSelect('orderItem.product', 'product')
+      .leftJoinAndSelect('orderItem.order', 'order')
       .where('orderItem.id = :id', { id })
       .getOne();
-    const order = await this.orderRepository.findOneBy({ id: orderId });
+
+    const order = await this.orderRepository.findOneBy({
+      id: orderItem.order.id,
+    });
 
     const newOrder = {
       ...order,

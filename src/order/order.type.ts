@@ -1,4 +1,4 @@
 export enum statusEnum {
-  PROGRESS = 'PROGRESS',
-  SEND = 'SEND',
+  INCARD = 'INCARD',
+  COMPLETED = 'COMPLETED',
 }

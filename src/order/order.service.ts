@@ -26,13 +26,11 @@ export class OrderService {
 
   async createOrder(data: CreateOrderDto): Promise<Order> {
     try {
-      console.log(data);
-      // const product = await this.productRepository.findOneBy({
-      //   id: data.product.id,
-      // });
+      const product = await this.productRepository.findOneBy({
+        id: data.orderItems[0].product.id,
+      });
       const order = await this.orderRepository.save(data);
-      // order.totalPrice = data.pro
-      console.log(order.totalPrice);
+      order.totalPrice = product.price * data.orderItems[0].quantity;
       return await this.orderRepository.save(order);
     } catch (error) {
       console.log(error);
