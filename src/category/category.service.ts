@@ -23,12 +23,19 @@ export class CategoryService {
   }
 
   async getAllCategory() {
-    return await this.categoryRepository.find();
+    return await this.categoryRepository
+      .createQueryBuilder('category')
+      .leftJoinAndSelect('category.products', 'products')
+      .getMany();
   }
 
   async getOneCategory(id: string) {
     try {
-      return await this.categoryRepository.findOneBy({ id });
+      return await this.categoryRepository
+        .createQueryBuilder('category')
+        .leftJoinAndSelect('category.products', 'products')
+        .where('category.id = :id', { id })
+        .getOne();
     } catch (error) {
       console.log(error);
       throw new Error('Error while getting category');

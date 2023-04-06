@@ -24,7 +24,6 @@ export class UserService {
 
   async createUser(data: CreateUserDto) {
     try {
-      console.log('toto ');
       return await this.userRepository.save(data);
     } catch (error) {
       console.log(error);

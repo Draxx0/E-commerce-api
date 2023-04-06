@@ -16,7 +16,10 @@ export class ProductService {
   ) {}
 
   async getAllProducts() {
-    return await this.productRepository.find();
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.category', 'category')
+      .getMany();
   }
 
   async createProduct(data: CreateProductDto) {
@@ -30,7 +33,11 @@ export class ProductService {
     }
   }
   async getOneProductById(id: string) {
-    return await this.productRepository.findOneBy({ id });
+    return await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.category', 'category')
+      .where('product.id = :id', { id })
+      .getOne();
   }
 
   async updateProduct(id: string, data: UpdateProductDto) {

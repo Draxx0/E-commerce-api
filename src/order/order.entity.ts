@@ -18,6 +18,9 @@ export class Order extends TimestampEntity {
   @Column({ type: 'enum', enum: statusEnum, default: statusEnum.PROGRESS })
   status: statusEnum;
 
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  totalPrice: number;
+
   @ManyToOne(() => User, (user) => user.id, { eager: true })
   user: User;
 

@@ -19,6 +19,9 @@ export class User extends TimestampEntity {
   @Column({ type: 'varchar' })
   password: string;
 
+  @Column({ type: 'varchar' })
+  address: string;
+
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 }

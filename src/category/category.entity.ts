@@ -1,5 +1,6 @@
 import { TimestampEntity } from 'src/generic/timestamp.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/product/product.entity';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('category')
 export class Category extends TimestampEntity {
@@ -11,4 +12,7 @@ export class Category extends TimestampEntity {
 
   @Column({ type: 'varchar' })
   description: string;
+
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
 }
