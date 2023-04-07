@@ -4,16 +4,16 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { OrderItemService } from './order-item.service';
 import { OrderItem } from './order-item.entity';
 import { CreateOrderItemDto } from './DTO/create-order-item.dto';
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult } from 'typeorm';
 import { UpdateOrderItemDto } from './DTO/update-order-item.dto';
-import { IDeleteBodyInterface } from './type/deleteBodyInterface';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('order-items')
 export class OrderItemController {
@@ -29,6 +29,7 @@ export class OrderItemController {
     return this.orderItemService.getOrderItemById(id);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   createOrderItem(@Body() data: CreateOrderItemDto): Promise<OrderItem> {
     return this.orderItemService.createOrderItem(data);

@@ -1,6 +1,7 @@
 import { TimestampEntity } from 'src/generic/timestamp.entity';
 import { Order } from 'src/order/order.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { userRole } from './user.role.enum';
 
 @Entity('user')
 export class User extends TimestampEntity {
@@ -8,13 +9,13 @@ export class User extends TimestampEntity {
   id: string;
 
   @Column({ type: 'varchar' })
-  firstName: string;
-
-  @Column({ type: 'varchar' })
-  lastName: string;
+  username: string;
 
   @Column({ type: 'varchar' })
   email: string;
+
+  @Column({ type: 'varchar', default: 'user' })
+  role: userRole;
 
   @Column({ type: 'varchar' })
   password: string;

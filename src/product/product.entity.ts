@@ -19,6 +19,8 @@ export class Product extends TimestampEntity {
   @Column({ type: 'integer' })
   price: number;
 
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, {
+    onDelete: 'SET NULL',
+  })
   category: Category;
 }

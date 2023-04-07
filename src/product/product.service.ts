@@ -42,11 +42,8 @@ export class ProductService {
 
   async updateProduct(id: string, data: UpdateProductDto) {
     const product = await this.productRepository.findOneBy({ id });
-    const productUpdate = { ...product, ...data };
-
-    await this.productRepository.save(productUpdate);
-
-    return productUpdate;
+    const productUpdate = { ...product, ...data, updated_at: new Date() };
+    return await this.productRepository.save(productUpdate);
   }
   async deleteProduct(id: string) {
     return await this.productRepository.delete(id);

@@ -11,7 +11,7 @@ export class OrderItem extends TimestampEntity {
   @Column({ type: 'integer' })
   quantity: number;
 
-  @ManyToOne(() => Order)
+  @ManyToOne(() => Order, { onDelete: 'SET NULL' })
   order: Order;
 
   @ManyToOne(() => Product)

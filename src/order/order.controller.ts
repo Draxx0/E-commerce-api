@@ -5,13 +5,13 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Order } from './order.entity';
 import { DeleteResult } from 'typeorm';
 import { CreateOrderDto } from './DTO/create-order.dto';
-import { UpdateOrderDto } from './DTO/update-order.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('orders')
 export class OrderController {
@@ -27,18 +27,11 @@ export class OrderController {
     return this.orderService.getOneOrderById(id);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   createProduct(@Body() data: CreateOrderDto): Promise<Order> {
     return this.orderService.createOrder(data);
   }
-
-  // @Put(':id')
-  // updateProduct(
-  //   @Param('id') id: string,
-  //   @Body() data: UpdateOrderDto,
-  // ): Promise<Order> {
-  //   return this.orderService.updateOrder(id, data);
-  // }
 
   @Delete(':id')
   deleteOrder(@Param('id') id: string): Promise<DeleteResult> {

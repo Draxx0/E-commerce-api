@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUserDto } from './DTO/create-user.dto';
+import { DeleteResult } from 'typeorm';
 
 @Controller('users')
 export class UserController {
@@ -19,7 +20,11 @@ export class UserController {
 
   @Post()
   createUser(@Body() data: CreateUserDto): Promise<User> {
-    console.log('from controller');
     return this.userService.createUser(data);
+  }
+
+  @Delete(':id')
+  deleteOrder(@Param('id') id: string): Promise<DeleteResult> {
+    return this.userService.deleteUser(id);
   }
 }

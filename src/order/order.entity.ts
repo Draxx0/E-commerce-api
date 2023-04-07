@@ -21,9 +21,14 @@ export class Order extends TimestampEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   totalPrice: number;
 
-  @ManyToOne(() => User, (user) => user.id, { eager: true })
+  @ManyToOne(() => User, (user) => user.id, {
+    eager: true,
+    onDelete: 'SET NULL',
+  })
   user: User;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
+    cascade: true,
+  })
   orderItems: OrderItem[];
 }

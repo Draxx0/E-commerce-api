@@ -43,7 +43,11 @@ export class CategoryService {
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+    const category = await this.categoryRepository.findOneBy({
+      id,
+    });
+    const categoryUpdate = { ...category, ...updateCategoryDto };
+    return await this.categoryRepository.save(categoryUpdate);
   }
 
   async deleteCategory(id: string) {
