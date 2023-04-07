@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { CreateOrderDto } from './DTO/create-order.dto';
-import { UpdateOrderDto } from './DTO/update-order.dto';
+import { JwtService } from '@nestjs/jwt';
 import { Product } from 'src/product/product.entity';
+import { Request } from 'express';
 
 Injectable();
 export class OrderService {
@@ -13,6 +14,7 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    private jwtService: JwtService,
   ) {}
 
   async getAllOrder() {
@@ -24,8 +26,13 @@ export class OrderService {
       .getMany();
   }
 
-  async createOrder(data: CreateOrderDto): Promise<Order> {
+  async createOrder(data: CreateOrderDto, req: Request): Promise<Order> {
     try {
+      const signedJwtAccessToken: string =
+        req.headers.authorization.split(' ')[1];
+      const decodedJwtAccessToken: any =
+        this.jwtService.decode(signedJwtAccessToken);
+      data.user = decodedJwtAccessToken;
       const product = await this.productRepository.findOneBy({
         id: data.orderItems[0].product.id,
       });

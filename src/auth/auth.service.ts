@@ -24,12 +24,13 @@ export class AuthService {
 
   async signInAdmin(username: string, password: string) {
     const user = await this.userService.getOneUserByUsername(username);
+    console.log(user);
     const isPasswordMatching = await bcrypt.compare(password, user.password);
     const isAdmin = user.role === 'admin';
-    if (!isPasswordMatching && !isAdmin) {
+    if (!isPasswordMatching || !isAdmin) {
       throw new UnauthorizedException();
     }
-    const payload = { username: user.username, sub: user.id };
+    const payload = { username: user.username, sub: user.id, role: user.role };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

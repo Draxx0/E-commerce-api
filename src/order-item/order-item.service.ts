@@ -75,7 +75,6 @@ export class OrderItemService {
     };
 
     await this.orderRepository.update(order.id, newOrder);
-
     return await this.orderItemRepository.delete(id);
   }
 }

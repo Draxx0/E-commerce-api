@@ -13,7 +13,4 @@ export class CreateUserDto {
 
   @IsString()
   address: string;
-
-  @IsString()
-  role: userRole;
 }

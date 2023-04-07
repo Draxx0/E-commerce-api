@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
@@ -12,6 +13,7 @@ import { Order } from './order.entity';
 import { DeleteResult } from 'typeorm';
 import { CreateOrderDto } from './DTO/create-order.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Request } from 'express';
 
 @Controller('orders')
 export class OrderController {
@@ -29,8 +31,11 @@ export class OrderController {
 
   @UseGuards(AuthGuard)
   @Post()
-  createProduct(@Body() data: CreateOrderDto): Promise<Order> {
-    return this.orderService.createOrder(data);
+  createProduct(
+    @Body() data: CreateOrderDto,
+    @Req() req: Request,
+  ): Promise<Order> {
+    return this.orderService.createOrder(data, req);
   }
 
   @Delete(':id')
