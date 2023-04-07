@@ -14,6 +14,6 @@ export class OrderItem extends TimestampEntity {
   @ManyToOne(() => Order, { onDelete: 'SET NULL' })
   order: Order;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { onDelete: 'SET NULL' })
   product: Product;
 }
